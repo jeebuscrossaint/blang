@@ -6,11 +6,16 @@
 #include <string>
 #include <cstdarg>
 #include <fstream>
+#include <csignal>
+#include <unistd.h>
 
-void render_cli(std::string) {}
+extern bool exit_requested;
+
+void render_cli() {}
 std::string version() {}
 void exit_cli() {}
 void file_grab(std::string) {}
+void file_grab(const std::string& filename) {}
 void parser() {}
 
 #endif
