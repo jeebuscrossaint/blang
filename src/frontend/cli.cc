@@ -21,7 +21,7 @@ void render_cli() {
     std::signal(SIGINT, signal_handler);
     std::signal(SIGQUIT, signal_handler);
 
-    std::cout << "Welcome to skid v" << version() << std::endl;
+    std::cout << "Welcome to skid" << version() << std::endl;
     std::cout << "Type 'help' for a list of commands" << std::endl;
     std::string input;
     while (true) {
@@ -55,7 +55,7 @@ void file_grab(std::string filename) {
     file.close();
 }
 
-void version() {
+std::string version() {
     std::ifstream meta_file("../meta.data");
     if (!meta_file.is_open()) {
         std::cerr << "Error: Could not open meta.data file" << std::endl;
@@ -72,5 +72,6 @@ void version() {
     }
 
     meta_file.close();
+    
     return "";
 }
