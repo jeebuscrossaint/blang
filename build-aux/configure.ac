@@ -17,5 +17,3 @@ AC_PROG_CC
 # Output files
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
-
-AUTOMAKE_OPTIONS = foreign

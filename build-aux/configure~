@@ -5102,7 +5102,7 @@ fi
 # Example: AC_CHECK_HEADERS([stdio.h stdlib.h])
 
 # Output files
-ac_config_files="$ac_config_files Makefile build-aux/Makefile"
+ac_config_files="$ac_config_files Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5859,7 +5859,6 @@ do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-    "build-aux/Makefile") CONFIG_FILES="$CONFIG_FILES build-aux/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: '$ac_config_target'" "$LINENO" 5;;
   esac
@@ -6424,4 +6423,3 @@ printf "%s\n" "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2
 fi
 
 
-AUTOMAKE_OPTIONS = foreign

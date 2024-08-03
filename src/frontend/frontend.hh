@@ -12,10 +12,9 @@
 extern bool exit_requested;
 
 void render_cli() {}
-std::string version() {}
+void version() {}
 void exit_cli() {}
-void file_grab(std::string) {}
-void file_grab(const std::string& filename) {}
+void file_grab(std::string filename) {}
 void parser() {}
 
 #endif

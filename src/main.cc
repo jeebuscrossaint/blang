@@ -1,4 +1,4 @@
-#include "frontend.hh"
+#include "frontend/frontend.hh"
 #include <iostream>
 
 int main(int argc, char* argv[]) {

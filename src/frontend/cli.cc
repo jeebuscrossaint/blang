@@ -39,7 +39,7 @@ void exit_cli() {
     std::cout << "(To exit, press Ctrl+C again or Ctrl+D or type 'exit')" << std::endl;
 }
 
-void file_grab(const std::string& filename) {
+void file_grab(std::string filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error: Could not open file " << filename << std::endl;
@@ -55,7 +55,7 @@ void file_grab(const std::string& filename) {
     file.close();
 }
 
-std::string version() {
+void version() {
     std::ifstream meta_file("../meta.data");
     if (!meta_file.is_open()) {
         std::cerr << "Error: Could not open meta.data file" << std::endl;
