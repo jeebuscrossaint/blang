@@ -1,3 +1,9 @@
+mod backend;
+use backend::open::given;
+use backend::read::read_file_path;
+
+
 fn main() {
-    println!("Hello, world!");
+    given();
+    read_file_path();
 }
