@@ -2,6 +2,7 @@ use crate::backend::open;
 use std::fs;
 use regex::Regex;
 
+/*
 pub fn engrave() {
     if let Some(file_path) = open::get_file_path() {
         match fs::read_to_string(&file_path) {
@@ -24,4 +25,9 @@ pub fn engrave() {
     } else {
         println!("No file path set.");
     }
+}*/
+// src/std_imp/engrave.rs
+pub fn engrave(text: &str) {
+    let processed_text = text.replace("\\n", "\n").replace("\\\"", "\"");
+    println!("{}", processed_text);
 }
