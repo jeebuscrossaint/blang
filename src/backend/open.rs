@@ -32,7 +32,7 @@ pub fn given() {
         unsafe {
             FILE_PATH = Some(Mutex::new(file_path));
         }
-        // TODO: Implement the logic to run the skid file
+
     } else {
         look();
     }
