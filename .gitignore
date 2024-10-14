@@ -1,2 +1,8 @@
 /target
 /.idea
+/build
+/CMakeFiles
+CmakeCache.txt
+cmake_install.cmake
+skid
+skid.exe
