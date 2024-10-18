@@ -129,6 +129,30 @@ skid/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/build
 .PHONY : skid/fast
 
+src/handler.o: src/handler.c.o
+.PHONY : src/handler.o
+
+# target to build an object file
+src/handler.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/src/handler.c.o
+.PHONY : src/handler.c.o
+
+src/handler.i: src/handler.c.i
+.PHONY : src/handler.i
+
+# target to preprocess a source file
+src/handler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/src/handler.c.i
+.PHONY : src/handler.c.i
+
+src/handler.s: src/handler.c.s
+.PHONY : src/handler.s
+
+# target to generate assembly for a file
+src/handler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/src/handler.c.s
+.PHONY : src/handler.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -162,6 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... skid"
+	@echo "... src/handler.o"
+	@echo "... src/handler.i"
+	@echo "... src/handler.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
