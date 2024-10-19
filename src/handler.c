@@ -1,5 +1,6 @@
 
 #include "../include/types.h"
+#include "../include/lexer.h"
 
 int 
 valid_file_extension(const char *filename)
@@ -14,7 +15,7 @@ grab_file(int argc, char *argv[], char *file_list[], int *file_count)
 if (argc < 2)
 {
 fprintf(stderr, "Usage: %s <file1.kid> <file2.kid> ... <fileN.kid>\n", argv[0]);
-return 1;
+return EXIT_FAILURE;
 }    
 
 *file_count = 0;
@@ -30,7 +31,7 @@ else
 fprintf(stderr, "Invalid file extension: %s\n", argv[i]);
 }
 }
-return 0;
+return EXIT_SUCCESS;
 }
 
 void
@@ -38,7 +39,7 @@ process_files(char *file_list[], int file_count)
 {
 for (int i = 0; i < file_count; i++)
 {
-printf("Processing file: %s\n", file_list[i]);
-// hand off to another function to process the file to an IR
+printf("Lexing file: %s\n", file_list[i]);
+process_file(file_list[i]);
 }
 }

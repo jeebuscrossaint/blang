@@ -153,6 +153,30 @@ src/handler.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/src/handler.c.s
 .PHONY : src/handler.c.s
 
+src/lexer.o: src/lexer.c.o
+.PHONY : src/lexer.o
+
+# target to build an object file
+src/lexer.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/src/lexer.c.o
+.PHONY : src/lexer.c.o
+
+src/lexer.i: src/lexer.c.i
+.PHONY : src/lexer.i
+
+# target to preprocess a source file
+src/lexer.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/src/lexer.c.i
+.PHONY : src/lexer.c.i
+
+src/lexer.s: src/lexer.c.s
+.PHONY : src/lexer.s
+
+# target to generate assembly for a file
+src/lexer.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/skid.dir/build.make CMakeFiles/skid.dir/src/lexer.c.s
+.PHONY : src/lexer.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... src/handler.o"
 	@echo "... src/handler.i"
 	@echo "... src/handler.s"
+	@echo "... src/lexer.o"
+	@echo "... src/lexer.i"
+	@echo "... src/lexer.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
