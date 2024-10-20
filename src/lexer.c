@@ -171,9 +171,17 @@ void process_file(const char* filename) {
     for (size_t i = 0; i < lexer.token_count; i++) {
         Token t = lexer.tokens[i];
         printf("Token: Type=%d, Value=%s, Line=%d, Column=%d\n", t.type, t.value, t.line, t.column);
-        free(t.value); // Free the token value if it was dynamically allocated
+        // No need to free t.value here, it will be freed in cleanup_lexer
     }
 
-    free(lexer.tokens);
+    cleanup_lexer(&lexer);
     free(buffer);
+}
+
+void cleanup_lexer(Lexer* lexer) {
+    for (size_t i = 0; i < lexer->token_count; i++) {
+        printf("Freeing token value: %s\n", lexer->tokens[i].value);
+        free(lexer->tokens[i].value);
+    }
+    free(lexer->tokens);
 }
