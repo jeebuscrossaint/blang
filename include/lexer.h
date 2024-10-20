@@ -11,14 +11,16 @@
 
 // is that a word?
 typedef enum {
-    TOKEN_EOF,         // End of file
-    TOKEN_IDENTIFIER,  // Variable/function names
-    TOKEN_NUMBER,      // Numeric literals
-    TOKEN_STRING,      // String literals
-    TOKEN_KEYWORD,     // Keywords like if, while, return, etc.
-    TOKEN_OPERATOR,    // Operators like +, -, *, /, =, etc.
-    TOKEN_PUNCTUATION, // Symbols like (, ), {, }, ;, etc.
-    TOKEN_ERROR        // Error or unrecognized token
+    TOKEN_EOF,         // End of file type 0
+    TOKEN_IDENTIFIER,  // Variable/function names type 1
+    TOKEN_NUMBER,      // Numeric literals type 2
+    TOKEN_STRING,      // String literals type 3
+    TOKEN_KEYWORD,     // Keywords like if, while, return, etc. type 4
+    TOKEN_OPERATOR,    // Operators like +, -, *, /, =, etc. type 5
+    TOKEN_PUNCTUATION, // Symbols like (, ), {, }, ;, etc. type 6
+    TOKEN_COMMENT,     // Comments type 7
+    TOKEN_WHITESPACE,  // Whitespace type 8
+    TOKEN_ERROR        // Error or unrecognized token type 9
 } TokenType;
 
 // Struct to represent a token

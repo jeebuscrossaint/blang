@@ -9,6 +9,7 @@ void init_lexer(Lexer* lexer, const char* input) {
     lexer->token_capacity = 10; // Initial capacity
     lexer->tokens = (Token*)malloc(lexer->token_capacity * sizeof(Token));
 }
+
 Token get_next_token(Lexer* lexer) {
     Token token;
     token.line = lexer->line;
@@ -32,7 +33,7 @@ Token get_next_token(Lexer* lexer) {
         return token;
     }
 
-    // Example: Lexing identifiers (variable names)
+    // Example: Lexing identifiers (variable names) and keywords
     if (isalpha(lexer->input[lexer->pos])) {
         size_t start = lexer->pos;
         while (isalnum(lexer->input[lexer->pos])) {
@@ -40,7 +41,25 @@ Token get_next_token(Lexer* lexer) {
             lexer->column++;
         }
         size_t length = lexer->pos - start;
-        token.type = TOKEN_IDENTIFIER;
+        token.value = strndup(lexer->input + start, length);
+
+        // Check if the identifier is a keyword
+        if (strcmp(token.value, "if") == 0 || strcmp(token.value, "else") == 0 || 
+            strcmp(token.value, "while") == 0 || strcmp(token.value, "return") == 0 || 
+            strcmp(token.value, "print") == 0 || strcmp(token.value, "end") == 0) {
+            token.type = TOKEN_KEYWORD;
+        } else {
+            token.type = TOKEN_IDENTIFIER;
+        }
+    } else if (isdigit(lexer->input[lexer->pos])) {
+        // Example: Lexing numeric literals
+        size_t start = lexer->pos;
+        while (isdigit(lexer->input[lexer->pos])) {
+            lexer->pos++;
+            lexer->column++;
+        }
+        size_t length = lexer->pos - start;
+        token.type = TOKEN_NUMBER;
         token.value = strndup(lexer->input + start, length);
     } else if (lexer->input[lexer->pos] == '"') {
         // Example: Lexing string literals
@@ -56,6 +75,50 @@ Token get_next_token(Lexer* lexer) {
         token.value = strndup(lexer->input + start, length);
         lexer->pos++; // Skip closing quote
         lexer->column++;
+    } else if (strchr("+-*/=<>!", lexer->input[lexer->pos])) {
+        // Example: Lexing operators
+        size_t start = lexer->pos;
+        lexer->pos++;
+        lexer->column++;
+        if (lexer->input[lexer->pos] == '=' && strchr("=<>!", lexer->input[start])) {
+            lexer->pos++;
+            lexer->column++;
+        }
+        size_t length = lexer->pos - start;
+        token.type = TOKEN_OPERATOR;
+        token.value = strndup(lexer->input + start, length);
+    } else if (strchr("(){}[];,", lexer->input[lexer->pos])) {
+        // Example: Lexing punctuation
+        token.type = TOKEN_PUNCTUATION;
+        token.value = strndup(lexer->input + lexer->pos, 1);
+        lexer->pos++;
+        lexer->column++;
+    } else if (lexer->input[lexer->pos] == '/' && lexer->input[lexer->pos + 1] == '/') {
+        // Example: Lexing single-line comments
+        lexer->pos += 2;
+        lexer->column += 2;
+        size_t start = lexer->pos;
+        while (lexer->input[lexer->pos] != '\n' && lexer->input[lexer->pos] != '\0') {
+            lexer->pos++;
+            lexer->column++;
+        }
+        size_t length = lexer->pos - start;
+        token.type = TOKEN_COMMENT;
+        token.value = strndup(lexer->input + start, length);
+    } else if (lexer->input[lexer->pos] == '/' && lexer->input[lexer->pos + 1] == '*') {
+        // Example: Lexing multi-line comments
+        lexer->pos += 2;
+        lexer->column += 2;
+        size_t start = lexer->pos;
+        while (!(lexer->input[lexer->pos] == '*' && lexer->input[lexer->pos + 1] == '/') && lexer->input[lexer->pos] != '\0') {
+            lexer->pos++;
+            lexer->column++;
+        }
+        size_t length = lexer->pos - start;
+        token.type = TOKEN_COMMENT;
+        token.value = strndup(lexer->input + start, length);
+        lexer->pos += 2; // Skip closing */
+        lexer->column += 2;
     } else {
         // If no rule matches, return an error token
         token.type = TOKEN_ERROR;
