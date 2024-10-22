@@ -1,0 +1,69 @@
+what keywords should tehre be and what tokens should tehre be
+
+keys:
+
+--code--
+
+- source (include another file)
+- asm (inline assembly)
+- return (probably will be required)
+- sizeof (cool unary)
+
+--comparison & comments--
+
+- < (less than greater than)
+- > (greater than less than)
+- =< (less than equal to)
+- >= (greater than equal to)
+- // (comments per line)
+- /* */ (multiline comment)
+- = (equal value assigner)
+- == (equal value checker)
+- ? (i forgot what this does ngl)
+
+--mathematical data types--
+
+- auto (auto type)
+- int (signed int)
+- uint (unsigned int)
+- const type (a constant of a type)
+- double (bigger data)
+- extern type (use it across files this piece of data)
+- long type (bigger type)
+- longlong (bigger type)
+- short (small number)
+- shortshort (really short number might convert to base 2 for because funny)
+- float (decimal number)
+
+--linguistic? data types--
+
+- string (yes this isnt just C but dookie)
+- char (1 character)
+- enum (enumeration we know what this does)
+- struct (we also know what this does lol)
+- union (ngl i havent used this in a HOT minute forgot what this does)
+- array (hardcoded length of stuff)
+- vector (dynamic array im not sure if this will exist but it would be fun to implement)
+
+--logic--
+
+- break (die)
+- while (do something while boolean true)
+- for (do something while arithmetic and logic happens)
+- case (case a do this yk)
+- do (do a thingy)
+- else (do i have to explain this)
+- if (do i have to explain this too)
+- switch (switch case break yk the drill)
+- elif (just else if yk)
+- default (default case in a switch case setup)
+
+
+--computation--
+(I might add a few constants built in the language or something like Euler, or Pi, or Tau (i think thats what its called?), and imaginary numbers, idk)
+
+--preprocessor macros--
+(I could do these but its a lot of work probably)
+
+--pointers--
+i gotta figure that out thsi will be wack to implement
