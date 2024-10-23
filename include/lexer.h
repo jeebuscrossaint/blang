@@ -23,6 +23,62 @@ typedef enum {
     TOKEN_ERROR        // Error or unrecognized token type 9
 } TokenType;
 
+typedef enum {
+    /* language perks */
+    TOKEN_SOURCE, // Source another file like how you do in shell scripts because #include is lame
+    TOKEN_ASSEMBLY, // inline assembly?
+    TOKEN_RETURN, // return keyword
+    TOKEN_SIZEOF, // sizeof unary operator
+    TOKEN_TERM, // ; to terminate lines
+    /* comparisons and comments */
+    TOKEN_LTG, // less than greater than sign <
+    TOKEN_GTL, // greater than less than
+    TOKEN_LTGEQ, // less than greater than equal to sign =<
+    TOKEN_GTLEQ, // greater than equal to sign >=
+    TOKEN_SINGLCOMMENT, // single line comments // yk the drill
+    TOKEN_MULTICOMMENT, // multiline comments /* yk the drirll */
+    TOKEN_ASSEQUAL, // equal value assigner x = y+12
+    TOKEN_VALEQUAL, // Equal value checker probably should be in the boolean section but whatever LOL
+    TOKEN_QUESTION, // question mark boolean algebra ?
+    /* mathematical data types */
+    TOKEN_AUTO, // auto data type we all know and love
+    TOKEN_INT, // specifiy integer
+    TOKEN_UINT, // unsigned integer
+    TOKEN_CONST, // const stuff
+    TOKEN_DOUBLE, // double data type
+    TOKEN_EXTERN, // externalize a data type
+    TOKEN_LONG, // long data type
+    TOKEN_LONGLONG, // two longs idk what tf to tell u dawg
+    TOKEN_SHORT, // i guess this is a short, like me
+    TOKEN_SHORTSHORT, // ngl a meme type lol
+    TOKEN_FLOAT, // float type yk decimal points
+    /* linguistic types */
+    TOKEN_STRING, // strings
+    TOKEN_CHAR, // a character
+    TOKEN_ENUM, // enums cuz they are epic and i am writing one rn for this lexer
+    TOKEN_STRUCT, // structs
+    TOKEN_UNION, // this will be wierd to implement but ok
+    TOKEN_ARRAY, // ARRAYS!!
+    TOKEN_VECTOR, // its ok if i dont implemenet this ebcause this seems jank to write i mean have you SEEN the C++ vector souce  code and header file?
+    /* logic */
+    TOKEN_BREAK, // break logic 
+    TOKEN_WHILE, // while loop
+    TOKEN_FOR, // for loop
+    TOKEN_CASE, // cases
+    TOKEN_DO, // do portion
+    TOKEN_ELSE, // Else statement
+    TOKEN_IF, // if statement
+    TOKEN_SWITCH, // switch statements
+    TOKEN_ELIF, // Elif keyword
+    TOKEN_DEFAULT, // switch case default
+    /* computation ( really just constants )*/
+    TOKEN_PI, // pi constant 3.14
+    TOKEN_GOLDEN, // golden ratio 1+sqrt5 / 2
+    TOKEN_SILVER, // silver ratio sqrt2 + 1
+    TOKEN_IMAGINE, // imaginary number sqrt-1
+    TOKEN_EULER, // euler number 2.78
+} TheSecondTokenTypes;
+
 // Struct to represent a token
 typedef struct {
     TokenType type; // Type of token

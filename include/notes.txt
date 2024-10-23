@@ -8,6 +8,7 @@ keys:
 - asm (inline assembly)
 - return (probably will be required)
 - sizeof (cool unary)
+- ; (semicolon line terminator)
 
 --comparison & comments--
 
@@ -67,3 +68,10 @@ keys:
 
 --pointers--
 i gotta figure that out thsi will be wack to implement
+
+--brackets n stuff--
+
+- { (open a piece of logic)
+- } (close the piece of logic)
+- ( (same sort of rigamaroll)
+- ) (same sort of rigamaroll)
