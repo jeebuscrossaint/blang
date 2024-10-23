@@ -79,6 +79,8 @@ typedef enum {
     TOKEN_EULER, // euler number 2.78
 } TheSecondTokenTypes;
 
+
+
 // Struct to represent a token
 typedef struct {
     TokenType type; // Type of token
