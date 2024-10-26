@@ -10,12 +10,16 @@ void init_lexer(Lexer* lexer, const char* input) {
     lexer->tokens = (Token*)malloc(lexer->token_capacity * sizeof(Token));
 }
 
-Token get_next_token(Lexer* lexer) {
+Token create_token(Lexer* lexer, TokenType type, size_t start, size_t length) {
     Token token;
+    token.type = type;
+    token.value = strndup(lexer->input + start, length);
     token.line = lexer->line;
-    token.column = lexer->column;
+    token.column = lexer->column - length;
+    return token;
+}
 
-    // Skip whitespace
+void skip_whitespace(Lexer* lexer) {
     while (lexer->input[lexer->pos] == ' ' || lexer->input[lexer->pos] == '\t' || lexer->input[lexer->pos] == '\n') {
         if (lexer->input[lexer->pos] == '\n') {
             lexer->line++;
@@ -25,6 +29,105 @@ Token get_next_token(Lexer* lexer) {
         }
         lexer->pos++;
     }
+}
+
+
+Token lex_identifier_or_keyword(Lexer* lexer) {
+    size_t start = lexer->pos;
+    while (isalnum(lexer->input[lexer->pos])) {
+        lexer->pos++;
+        lexer->column++;
+    }
+    size_t length = lexer->pos - start;
+    char* value = strndup(lexer->input + start, length);
+
+    TokenType type = TOKEN_IDENTIFIER;
+    if (strcmp(value, "if") == 0 || strcmp(value, "else") == 0 || 
+        strcmp(value, "while") == 0 || strcmp(value, "return") == 0 || 
+        strcmp(value, "print") == 0 || strcmp(value, "end") == 0) {
+        type = TOKEN_KEYWORD;
+    }
+
+    Token token = create_token(lexer, type, start, length);
+    free(value);
+    return token;
+}
+
+Token lex_number(Lexer* lexer) {
+    size_t start = lexer->pos;
+    while (isdigit(lexer->input[lexer->pos])) {
+        lexer->pos++;
+        lexer->column++;
+    }
+    size_t length = lexer->pos - start;
+    return create_token(lexer, TOKEN_NUMBER, start, length);
+}
+
+Token lex_string(Lexer* lexer) {
+    lexer->pos++; // Skip opening quote
+    lexer->column++;
+    size_t start = lexer->pos;
+    while (lexer->input[lexer->pos] != '"' && lexer->input[lexer->pos] != '\0') {
+        lexer->pos++;
+        lexer->column++;
+    }
+    size_t length = lexer->pos - start;
+    lexer->pos++; // Skip closing quote
+    lexer->column++;
+    return create_token(lexer, TOKEN_STRING, start, length);
+}
+
+Token lex_operator(Lexer* lexer) {
+    size_t start = lexer->pos;
+    lexer->pos++;
+    lexer->column++;
+    if (lexer->input[lexer->pos] == '=' && strchr("=<>!", lexer->input[start])) {
+        lexer->pos++;
+        lexer->column++;
+    }
+    size_t length = lexer->pos - start;
+    return create_token(lexer, TOKEN_OPERATOR, start, length);
+}
+
+Token lex_punctuation(Lexer* lexer) {
+    size_t start = lexer->pos;
+    lexer->pos++;
+    lexer->column++;
+    return create_token(lexer, TOKEN_PUNCTUATION, start, 1);
+}
+
+Token lex_single_line_comment(Lexer* lexer) {
+    lexer->pos += 2;
+    lexer->column += 2;
+    size_t start = lexer->pos;
+    while (lexer->input[lexer->pos] != '\n' && lexer->input[lexer->pos] != '\0') {
+        lexer->pos++;
+        lexer->column++;
+    }
+    size_t length = lexer->pos - start;
+    return create_token(lexer, TOKEN_COMMENT, start, length);
+}
+
+Token lex_multi_line_comment(Lexer* lexer) {
+    lexer->pos += 2;
+    lexer->column += 2;
+    size_t start = lexer->pos;
+    while (!(lexer->input[lexer->pos] == '*' && lexer->input[lexer->pos + 1] == '/') && lexer->input[lexer->pos] != '\0') {
+        lexer->pos++;
+        lexer->column++;
+    }
+    size_t length = lexer->pos - start;
+    lexer->pos += 2; // Skip closing */
+    lexer->column += 2;
+    return create_token(lexer, TOKEN_COMMENT, start, length);
+}
+
+Token get_next_token(Lexer* lexer) {
+    skip_whitespace(lexer);
+
+    Token token;
+    token.line = lexer->line;
+    token.column = lexer->column;
 
     // Check for end of input
     if (lexer->input[lexer->pos] == '\0') {
@@ -33,108 +136,28 @@ Token get_next_token(Lexer* lexer) {
         return token;
     }
 
-    // Example: Lexing identifiers (variable names) and keywords
+    // Lex different types of tokens
     if (isalpha(lexer->input[lexer->pos])) {
-        size_t start = lexer->pos;
-        while (isalnum(lexer->input[lexer->pos])) {
-            lexer->pos++;
-            lexer->column++;
-        }
-        size_t length = lexer->pos - start;
-        token.value = strndup(lexer->input + start, length);
-
-        // Check if the identifier is a keyword
-        if (strcmp(token.value, "if") == 0 || strcmp(token.value, "else") == 0 || 
-            strcmp(token.value, "while") == 0 || strcmp(token.value, "return") == 0 || 
-            strcmp(token.value, "print") == 0 || strcmp(token.value, "end") == 0) {
-            token.type = TOKEN_KEYWORD;
-        } else {
-            token.type = TOKEN_IDENTIFIER;
-        }
+        return lex_identifier_or_keyword(lexer);
     } else if (isdigit(lexer->input[lexer->pos])) {
-        // Example: Lexing numeric literals
-        size_t start = lexer->pos;
-        while (isdigit(lexer->input[lexer->pos])) {
-            lexer->pos++;
-            lexer->column++;
-        }
-        size_t length = lexer->pos - start;
-        token.type = TOKEN_NUMBER;
-        token.value = strndup(lexer->input + start, length);
+        return lex_number(lexer);
     } else if (lexer->input[lexer->pos] == '"') {
-        // Example: Lexing string literals
-        lexer->pos++;
-        lexer->column++;
-        size_t start = lexer->pos;
-        while (lexer->input[lexer->pos] != '"' && lexer->input[lexer->pos] != '\0') {
-            lexer->pos++;
-            lexer->column++;
-        }
-        size_t length = lexer->pos - start;
-        token.type = TOKEN_STRING;
-        token.value = strndup(lexer->input + start, length);
-        lexer->pos++; // Skip closing quote
-        lexer->column++;
+        return lex_string(lexer);
     } else if (strchr("+-*/=<>!", lexer->input[lexer->pos])) {
-        // Example: Lexing operators
-        size_t start = lexer->pos;
-        lexer->pos++;
-        lexer->column++;
-        if (lexer->input[lexer->pos] == '=' && strchr("=<>!", lexer->input[start])) {
-            lexer->pos++;
-            lexer->column++;
-        }
-        size_t length = lexer->pos - start;
-        token.type = TOKEN_OPERATOR;
-        token.value = strndup(lexer->input + start, length);
+        return lex_operator(lexer);
     } else if (strchr("(){}[];,", lexer->input[lexer->pos])) {
-        // Example: Lexing punctuation
-        token.type = TOKEN_PUNCTUATION;
-        token.value = strndup(lexer->input + lexer->pos, 1);
-        lexer->pos++;
-        lexer->column++;
+        return lex_punctuation(lexer);
     } else if (lexer->input[lexer->pos] == '/' && lexer->input[lexer->pos + 1] == '/') {
-        // Example: Lexing single-line comments
-        lexer->pos += 2;
-        lexer->column += 2;
-        size_t start = lexer->pos;
-        while (lexer->input[lexer->pos] != '\n' && lexer->input[lexer->pos] != '\0') {
-            lexer->pos++;
-            lexer->column++;
-        }
-        size_t length = lexer->pos - start;
-        token.type = TOKEN_COMMENT;
-        token.value = strndup(lexer->input + start, length);
+        return lex_single_line_comment(lexer);
     } else if (lexer->input[lexer->pos] == '/' && lexer->input[lexer->pos + 1] == '*') {
-        // Example: Lexing multi-line comments
-        lexer->pos += 2;
-        lexer->column += 2;
-        size_t start = lexer->pos;
-        while (!(lexer->input[lexer->pos] == '*' && lexer->input[lexer->pos + 1] == '/') && lexer->input[lexer->pos] != '\0') {
-            lexer->pos++;
-            lexer->column++;
-        }
-        size_t length = lexer->pos - start;
-        token.type = TOKEN_COMMENT;
-        token.value = strndup(lexer->input + start, length);
-        lexer->pos += 2; // Skip closing */
-        lexer->column += 2;
+        return lex_multi_line_comment(lexer);
     } else {
         // If no rule matches, return an error token
-        token.type = TOKEN_ERROR;
-        token.value = strndup(lexer->input + lexer->pos, 1);
+        size_t start = lexer->pos;
         lexer->pos++;
         lexer->column++;
+        return create_token(lexer, TOKEN_ERROR, start, 1);
     }
-
-    // Store the token in the dynamic array
-    if (lexer->token_count >= lexer->token_capacity) {
-        lexer->token_capacity *= 2;
-        lexer->tokens = (Token*)realloc(lexer->tokens, lexer->token_capacity * sizeof(Token));
-    }
-    lexer->tokens[lexer->token_count++] = token;
-
-    return token;
 }
 
 void process_file(const char* filename) {
