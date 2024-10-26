@@ -10,7 +10,7 @@
 //types of tokens we will lex
 
 // is that a word?
-typedef enum {
+/*typedef enum {
     TOKEN_EOF,         // End of file type 0
     TOKEN_IDENTIFIER,  // Variable/function names type 1
     TOKEN_NUMBER,      // Numeric literals type 2
@@ -21,7 +21,7 @@ typedef enum {
     TOKEN_COMMENT,     // Comments type 7
     TOKEN_WHITESPACE,  // Whitespace type 8
     TOKEN_ERROR        // Error or unrecognized token type 9
-} TokenType;
+} TokenType; */
 
 typedef enum {
     /* language perks */
@@ -30,6 +30,8 @@ typedef enum {
     TOKEN_RETURN, // return keyword
     TOKEN_SIZEOF, // sizeof unary operator
     TOKEN_TERM, // ; to terminate lines
+    TOKEN_EOF, // end of file i think
+    TOKEN_ERROR, // unknown type
     /* comparisons and comments */
     TOKEN_LTG, // less than greater than sign <
     TOKEN_GTL, // greater than less than
@@ -40,6 +42,11 @@ typedef enum {
     TOKEN_ASSEQUAL, // equal value assigner x = y+12
     TOKEN_VALEQUAL, // Equal value checker probably should be in the boolean section but whatever LOL
     TOKEN_QUESTION, // question mark boolean algebra ?
+    TOKEN_ANDAND, // && operation
+    TOKEN_OROR, // || operation
+    TOKEN_TRUE, // true literal
+    TOKEN_FALSE, // false literal
+    TOKEN_NOTEQUAL,// ! not
     /* mathematical data types */
     TOKEN_AUTO, // auto data type we all know and love
     TOKEN_INT, // specifiy integer
@@ -77,7 +84,7 @@ typedef enum {
     TOKEN_SILVER, // silver ratio sqrt2 + 1
     TOKEN_IMAGINE, // imaginary number sqrt-1
     TOKEN_EULER, // euler number 2.78
-} TheSecondTokenTypes;
+} TokenType;
 
 
 
