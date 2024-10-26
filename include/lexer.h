@@ -46,6 +46,8 @@ typedef enum {
     TOKEN_MINUS, // -
     TOKEN_MULTIPLY, // *
     TOKEN_DIVIDE, // /
+    TOKEN_INCREMENT, // ++
+    TOKEN_DECREMENT, // --
     TOKEN_OPERATOR, // leftover basically 
     /* mathematical data types ((all implemented in lexer)) */
     TOKEN_AUTO, // auto data type we all know and love

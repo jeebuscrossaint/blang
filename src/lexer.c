@@ -281,7 +281,7 @@ Token lex_operator(Lexer* lexer) {
     char next = lexer->input[lexer->pos + 1];
     TokenType type;
     size_t length = 1;
-    
+
     // Handle two-character operators
     if (next == '=') {
         switch (first) {
@@ -295,6 +295,12 @@ Token lex_operator(Lexer* lexer) {
             case '/': type = TOKEN_DIVEQUAL; length = 2; break;
             default: type = TOKEN_OPERATOR;
         }
+    } else if (first == '+' && next == '+') {
+        type = TOKEN_INCREMENT;
+        length = 2;
+    } else if (first == '-' && next == '-') {
+        type = TOKEN_DECREMENT;
+        length = 2;
     } else {
         // Single-character operators
         switch (first) {
@@ -309,7 +315,7 @@ Token lex_operator(Lexer* lexer) {
             default: type = TOKEN_OPERATOR;
         }
     }
-    
+
     lexer->pos += length;
     lexer->column += length;
     return create_token(lexer, type, start, length);
@@ -421,6 +427,7 @@ void process_file(const char* filename) {
 
 void cleanup_lexer(Lexer* lexer) {
     for (size_t i = 0; i < lexer->token_count; i++) {
+        printf("Freeing token value: %s\n", lexer->tokens[i].value);
         free(lexer->tokens[i].value);
     }
     free(lexer->tokens);
