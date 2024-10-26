@@ -10,5 +10,3 @@ int fortnite() {
 	print "bruh moment";
 	return 0;
 }
-
-
