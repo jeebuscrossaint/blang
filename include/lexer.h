@@ -17,7 +17,7 @@ typedef enum {
     TOKEN_ASSEMBLY, // inline assembly?
     TOKEN_RETURN, // return keyword
     TOKEN_SIZEOF, // sizeof unary operator
-    TOKEN_TERMINATE, // ; to terminate lines
+    TOKEN_SEMICOLON, // ; to terminate lines
     TOKEN_SOF, // start of file
     TOKEN_EOF, // end of file i think
     TOKEN_ERROR, // unknown type
@@ -36,7 +36,17 @@ typedef enum {
     TOKEN_OROR, // || operation
     TOKEN_TRUE, // true literal
     TOKEN_FALSE, // false literal
-    TOKEN_NOTEQUAL,// ! not
+    TOKEN_NOT,// ! not
+    TOKEN_NOTEQUAL, // !=
+    TOKEN_DIVEQUAL, // /=
+    TOKEN_PLUSEQUAL, // +=
+    TOKEN_MINUSEQUAL, // -=
+    TOKEN_MULEQUAL, // *=
+    TOKEN_PLUS, // +
+    TOKEN_MINUS, // -
+    TOKEN_MULTIPLY, // *
+    TOKEN_DIVIDE, // /
+    TOKEN_OPERATOR, // leftover basically 
     /* mathematical data types ((all implemented in lexer)) */
     TOKEN_AUTO, // auto data type we all know and love
     TOKEN_INT, // specifiy integer
@@ -74,6 +84,18 @@ typedef enum {
     TOKEN_SILVER, // silver ratio sqrt2 + 1
     TOKEN_IMAGINE, // imaginary number sqrt-1
     TOKEN_EULER, // euler number 2.78
+    /* braces n brackets that sorta rigamaroll*/
+    TOKEN_LPAREN, // (
+    TOKEN_RPAREN, // )
+    TOKEN_LBRACE, // {
+    TOKEN_RBRACE, // }
+    TOKEN_LBRACKET, // [
+    TOKEN_RBRACKET, // ]
+    TOKEN_COMMA, // ,
+    TOKEN_DOT, // .
+    // misc
+    TOKEN_NUMBER,
+    TOKEN_HEX_NUMBER,
 } TokenType;
 
 
