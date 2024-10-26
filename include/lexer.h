@@ -10,28 +10,18 @@
 //types of tokens we will lex
 
 // is that a word?
-/*typedef enum {
-    TOKEN_EOF,         // End of file type 0
-    TOKEN_IDENTIFIER,  // Variable/function names type 1
-    TOKEN_NUMBER,      // Numeric literals type 2
-    TOKEN_STRING,      // String literals type 3
-    TOKEN_KEYWORD,     // Keywords like if, while, return, etc. type 4
-    TOKEN_OPERATOR,    // Operators like +, -, *, /, =, etc. type 5
-    TOKEN_PUNCTUATION, // Symbols like (, ), {, }, ;, etc. type 6
-    TOKEN_COMMENT,     // Comments type 7
-    TOKEN_WHITESPACE,  // Whitespace type 8
-    TOKEN_ERROR        // Error or unrecognized token type 9
-} TokenType; */
 
 typedef enum {
-    /* language perks */
+    /* language perks ((pretty much all implementeed in lexer))*/
     TOKEN_SOURCE, // Source another file like how you do in shell scripts because #include is lame
     TOKEN_ASSEMBLY, // inline assembly?
     TOKEN_RETURN, // return keyword
     TOKEN_SIZEOF, // sizeof unary operator
-    TOKEN_TERM, // ; to terminate lines
+    TOKEN_TERMINATE, // ; to terminate lines
+    TOKEN_SOF, // start of file
     TOKEN_EOF, // end of file i think
     TOKEN_ERROR, // unknown type
+    TOKEN_IDENTIFIER, // name of a thing like yk int x x is indetifier
     /* comparisons and comments */
     TOKEN_LTG, // less than greater than sign <
     TOKEN_GTL, // greater than less than
@@ -47,7 +37,7 @@ typedef enum {
     TOKEN_TRUE, // true literal
     TOKEN_FALSE, // false literal
     TOKEN_NOTEQUAL,// ! not
-    /* mathematical data types */
+    /* mathematical data types ((all implemented in lexer)) */
     TOKEN_AUTO, // auto data type we all know and love
     TOKEN_INT, // specifiy integer
     TOKEN_UINT, // unsigned integer
@@ -67,7 +57,7 @@ typedef enum {
     TOKEN_UNION, // this will be wierd to implement but ok
     TOKEN_ARRAY, // ARRAYS!!
     TOKEN_VECTOR, // its ok if i dont implemenet this ebcause this seems jank to write i mean have you SEEN the C++ vector souce  code and header file?
-    /* logic */
+    /* recursion */
     TOKEN_BREAK, // break logic 
     TOKEN_WHILE, // while loop
     TOKEN_FOR, // for loop
