@@ -38,4 +38,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Add source files
 add_executable(fifth
-	src/main.cc)
+	src/main.cc
+	src/flags.cc
+	src/help.cc
+)
