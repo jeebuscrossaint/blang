@@ -1,9 +1,0 @@
-/target
-/.idea
-/build
-/CMakeFiles
-CMakeCache.txt
-cmake_install.cmake
-skid
-skid.exe
-Makefile
