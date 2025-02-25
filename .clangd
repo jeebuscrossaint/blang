@@ -4,13 +4,12 @@ CompileFlags:
     - "-Iinclude"
 
     # Set the C++ standard to C++26
-    - "-std=c++26"
+    - "-std=c++20"
 
     # Enable warnings and treat them as errors
     - "-Wall"
     - "-Wextra"
     - "-Wpedantic"
-    - "-Werror"
 
     # Add Debug sanitizers (will only apply when in Debug mode)
     - "-fsanitize=address"
